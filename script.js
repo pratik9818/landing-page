@@ -26,85 +26,40 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
           }, index * 200);
       });
 
-      // Form validation
-      const form = document.getElementById('contactForm');
-      const inputs = {
-          name: {
-              element: document.getElementById('name'),
-              error: document.getElementById('nameError'),
-              validate: (value) => {
-                  const regex = /^[A-Za-z ]{2,50}$/;
-                  return regex.test(value) ? '' : 'Please enter a valid name (2-50 characters, letters only)';
-              }
-          },
-          email: {
-              element: document.getElementById('email'),
-              error: document.getElementById('emailError'),
-              validate: (value) => {
-                  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                  return regex.test(value) ? '' : 'Please enter a valid email address';
-              }
-          },
-          message: {
-              element: document.getElementById('message'),
-              error: document.getElementById('messageError'),
-              validate: (value) => {
-                  return value.length >= 10 ? '' : 'Message must be at least 10 characters long';
-              }
-          }
-      };
-
-      // Real-time validation
-      Object.values(inputs).forEach(input => {
-          input.element.addEventListener('input', () => {
-              const error = input.validate(input.element.value);
-              input.error.textContent = error;
-              input.error.style.display = error ? 'block' : 'none';
-          });
-      });
-
-      // Form submission
-      form.addEventListener('submit', async (e) => {
-          e.preventDefault();
-        
-          // Validate all fields
-          let isValid = true;
-          Object.values(inputs).forEach(input => {
-              const error = input.validate(input.element.value);
-              input.error.textContent = error;
-              input.error.style.display = error ? 'block' : 'none';
-              if (error) isValid = false;
-          });
-
-          if (isValid) {
-              const submitBtn = form.querySelector('.submit-btn');
-              submitBtn.disabled = true;
-              submitBtn.textContent = 'Sending...';
-
-              try {
-                  // Add your form submission logic here
-                  // Example: await fetch('/api/contact', {...})
-                
-                  // Show success message
-                  const successMessage = document.createElement('div');
-                  successMessage.className = 'success-message';
-                  successMessage.textContent = 'Message sent successfully!';
-                  document.body.appendChild(successMessage);
-
-                  // Reset form
-                  form.reset();
-                  setTimeout(() => {
-                      successMessage.remove();
-                  }, 3000);
-              } catch (error) {
-                  console.error('Error:', error);
-              } finally {
-                  submitBtn.disabled = false;
-                  submitBtn.textContent = 'Send Message';
-              }
+      // Real-time validation for improved user experience
+      const nameInput = document.getElementById('name');
+      const emailInput = document.getElementById('email');
+      const serviceInput = document.getElementById('service');
+      const messageInput = document.getElementById('message');
+      
+      // Add input event listeners for real-time feedback
+      nameInput.addEventListener('input', () => {
+          if (nameInput.value.trim().length >= 2) {
+              document.getElementById('nameError').style.display = 'none';
           }
       });
-  });// Add scroll-based navbar background
+      
+      emailInput.addEventListener('input', () => {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (emailRegex.test(emailInput.value.trim())) {
+              document.getElementById('emailError').style.display = 'none';
+          }
+      });
+      
+      serviceInput.addEventListener('change', () => {
+          if (serviceInput.value) {
+              document.getElementById('serviceError').style.display = 'none';
+          }
+      });
+      
+      messageInput.addEventListener('input', () => {
+          if (messageInput.value.trim().length >= 10) {
+              document.getElementById('messageError').style.display = 'none';
+          }
+      });
+  });
+
+// Add scroll-based navbar background
 window.addEventListener('scroll', function() {
     if (window.scrollY > 50) {
         document.querySelector('.navbar').classList.add('scrolled');
@@ -112,8 +67,6 @@ window.addEventListener('scroll', function() {
         document.querySelector('.navbar').classList.remove('scrolled');
     }
 });
-
-
 
 // Animate testimonials on scroll
 document.addEventListener('DOMContentLoaded', () => {
@@ -194,4 +147,140 @@ const statsObserver = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.stat-card').forEach(card => {
     statsObserver.observe(card);
+});
+
+// Initialize Supabase client
+const supabaseUrl = 'https://xkerkqfhbcvwslcmwykz.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhrZXJrcWZoYmN2d3NsY213eWt6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjUxMTcwNzgsImV4cCI6MjA0MDY5MzA3OH0.7V168e1QCuv_-bFxXf5hBOyJFXQm_9hHOlBa-7jXUQQ'
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
+
+// Form handling
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contactForm');
+    const submitBtn = form.querySelector('.submit-btn');
+    const btnText = submitBtn.querySelector('.btn-text');
+    
+    // Function to show error message
+    function showError(elementId, message) {
+        const errorElement = document.getElementById(elementId);
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+    }
+
+    // Function to clear error message
+    function clearError(elementId) {
+        const errorElement = document.getElementById(elementId);
+        errorElement.style.display = 'none';
+    }
+
+    // Function to show success message
+    function showSuccessMessage() {
+        const successMessage = document.createElement('div');
+        successMessage.className = 'success-message';
+        successMessage.textContent = 'Message sent successfully!';
+        document.body.appendChild(successMessage);
+
+        setTimeout(() => {
+            successMessage.remove();
+        }, 3000);
+    }
+
+    // Form validation
+    function validateForm() {
+        let isValid = true;
+        const name = document.getElementById('name');
+        const email = document.getElementById('email');
+        const service = document.getElementById('service');
+        const message = document.getElementById('message');
+
+        console.log('Name:', name.value);
+        console.log('Email:', email.value);
+        console.log('Service:', service.value);
+        console.log('Message:', message.value);
+
+        // Name validation
+        if (!name.value.trim() || name.value.length < 2) {
+            showError('nameError', 'Please enter a valid name (minimum 2 characters)');
+            isValid = false;
+        } else {
+            clearError('nameError');
+        }
+
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email.value.trim() || !emailRegex.test(email.value)) {
+            showError('emailError', 'Please enter a valid email address');
+            isValid = false;
+        } else {
+            clearError('emailError');
+        }
+
+        // Service validation
+        if (!service.value) {
+            showError('serviceError', 'Please select a service');
+            isValid = false;
+        } else {
+            clearError('serviceError');
+        }
+
+        // Message validation
+        if (!message.value.trim() || message.value.length < 10) {
+            showError('messageError', 'Please enter a message (minimum 10 characters)');
+            isValid = false;
+        } else {
+            clearError('messageError');
+        }
+
+        console.log('Form is valid:', isValid);
+        return isValid;
+    }
+
+    // Form submission
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        if (!validateForm()) {
+            return; // Prevent submission if validation fails
+        }
+        
+        // Show loading state
+        submitBtn.disabled = true;
+        btnText.textContent = 'Sending...';
+
+        try {
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                service: document.getElementById('service').value,
+                message: document.getElementById('message').value,
+                created_at: new Date().toISOString()
+            };
+
+            // Insert data into Supabase
+            const { data, error } = await supabaseClient
+                .from('contacts')
+                .insert([formData]);
+
+            if (error) throw error;
+
+            // Show success message
+            showSuccessMessage();
+            
+            // Reset form
+            form.reset();
+
+            // Reset button state
+            submitBtn.disabled = false;
+            btnText.textContent = 'Send Message';
+
+        } catch (error) {
+            console.error('Error:', error);
+            showError('messageError', 'Failed to send message. Please try again.');
+            
+            // Reset button state
+            submitBtn.disabled = false;
+            btnText.textContent = 'Send Message';
+        }
+    });
 });
