@@ -8,10 +8,25 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="navbar.css">
     <!-- <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"> -->
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> -->
 </head>
 <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="logo">a2digitalsolution</a>
+            <button class="mobile-menu-btn">☰</button>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
     <!-- Hero Section -->
     <section class="hero">
         <div class="shape shape-1"></div>
@@ -21,128 +36,11 @@
             <h1 class="hero-title">Web Wizards</h1>
             <p class="hero-subtitle">Transforming Ideas into <span>Digital Masterpieces</span> | <span>Web Design</span> • <span>Development</span> • <span>Innovation</span></p>
             <div class="cta-container">
-                <a href="#contact" class="hero-cta cta-primary">Let's Connect</a>
+                <a href="contact.html" class="hero-cta cta-primary">Let's Connect</a>
             </div>
         </div>
     </section>
-      <!-- Testimonials Section -->
-      <section class="testimonials">
-          <div class="testimonial-shape shape-circle"></div>
-          <div class="testimonial-shape shape-square"></div>
-          
-          <div class="testimonial-container">
-              <div class="testimonial-header">
-                  <h2 class="section-title">What Clients Say</h2>
-              </div>
-              
-              <div class="testimonial-track">
-                  <!-- Testimonial Card 1 -->
-                  <div class="testimonial-card">
-                      <div class="client-profile">
-                          <div class="client-info">
-                              <h4 class="client-name">Rajiv Mehta</h4>
-                              <p class="client-role">Founder, InnovateX Solutions</p>
-                          </div>
-                      </div>
-                      <p class="testimonial-text">"Working with a2digitalsolution transformed our online presence completely. Their expertise in web development and UI/UX design resulted in a 40% increase in customer engagement and significantly improved our conversion rates."</p>
-                      <div class="rating">★★★★★</div>
-                      <div class="quote-icon">❝</div>
-                  </div>
-                  <div class="testimonial-card">
-                    <div class="client-profile">
-                        <div class="client-info">
-                            <h4 class="client-name">Priya Sharma</h4>
-                            <p class="client-role">CEO, NexGen Retail</p>
-                        </div>
-                    </div>
-                    <p class="testimonial-text">"The team at a2digitalsolution delivered beyond our expectations. Their approach to our e-commerce platform was innovative and strategic. Since launching our new website, we've seen a 65% increase in online sales and received countless compliments on the user experience."</p>
-                    <div class="rating">★★★★★</div>
-                    <div class="quote-icon">❝</div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="client-profile">
-                        <div class="client-info">
-                            <h4 class="client-name">Vikram Desai</h4>
-                            <p class="client-role">Director, FutureTech Ventures</p>
-                        </div>
-                    </div>
-                    <p class="testimonial-text">"We hired a2digitalsolution for our AI integration project, and they exceeded all benchmarks. Their technical expertise and creative problem-solving approach helped us implement solutions we didn't think were possible. Our app now outperforms all competitors in our market."</p>
-                    <div class="rating">★★★★★</div>
-                    <div class="quote-icon">❝</div>
-                </div>
-                  
-                  <!-- Add more testimonial cards similarly -->
-              </div>
-          </div>
-      </section>
-    <!-- About Section -->
-    <section class="about">
-        <div class="shape-about shape-about-1"></div>
-        <div class="shape-about shape-about-2"></div>
-        
-        <div class="about-container">
-            <div class="about-content">
-                <h2 class="about-title">About Us</h2>
-                <div class="about-text">
-                    <span class="typing-text">At a2digitalsolution, we're not just building websites  — we're building digital experiences that connect, convert, and captivate.</span>
-                    <span class="typing-text">We are a passionate team of designers, developers, and digital strategists who blend creativity with technology to craft powerful online solutions.</span>
-                    <span class="typing-text">From startups to established brands, we help businesses grow, stand out, and thrive in the digital world.</span>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Contact Form Section -->
-    <section id="contact" class="contact-section">
-        <div class="contact-container">
-            <h2 class="contact-title">Get In Touch</h2>
-            
-            <form class="contact-form" id="contactForm" novalidate>
-                <div class="form-group">
-                    <div class="input-wrapper">
-                        <input type="text" class="form-input" id="name" required pattern="[A-Za-z ]{2,50}" placeholder=" ">
-                        <label class="form-label">Your Name</label>
-                    </div>
-                    <span class="error-message" id="nameError"></span>
-                </div>
-                
-                <div class="form-group">
-                    <div class="input-wrapper">
-                        <input type="email" class="form-input" id="email" required placeholder=" ">
-                        <label class="form-label">Your Email</label>
-                    </div>
-                    <span class="error-message" id="emailError"></span>
-                </div>
-                
-                <div class="form-group">
-                    <div class="input-wrapper">
-                        <select class="form-input" id="service" required>
-                            <option value="" disabled selected></option>
-                            <option value="web-development">Web Development</option>
-                            <option value="app-development">App Development</option>
-                            <option value="ai-agent">AI Agent Development</option>
-                            <option value="seo">SEO Optimization</option>
-                            <option value="digital-marketing">Digital Marketing</option>
-                            <option value="ui-ux">UI/UX Design</option>
-                        </select>
-                        <label class="form-label">Select Service</label>
-                    </div>
-                    <span class="error-message" id="serviceError"></span>
-                </div>
-                
-                <div class="form-group">
-                    <div class="input-wrapper">
-                        <textarea class="form-input" id="message" required minlength="10" placeholder=" "></textarea>
-                        <label class="form-label">Your Message</label>
-                    </div>
-                    <span class="error-message" id="messageError"></span>
-                </div>
-                
-                <button type="submit" class="submit-btn">
-                    <span class="btn-text">Send Message</span>
-                </button>
-            </form>
-        </div>
-    </section>
+
     <!-- Footer Section -->
     <footer class="footer">
         <div class="footer-wave"></div>
@@ -202,9 +100,7 @@
         </div>
     </footer>
     
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-    <script src="script.js"></script>
-    
+    <script src="navbar.js"></script>
 </body>
 </html>
 
