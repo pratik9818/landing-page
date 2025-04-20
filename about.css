@@ -1,0 +1,586 @@
+/* About page specific styles */
+.about {
+    padding-top: 100px;
+    min-height: 100vh;
+    position: relative;
+    background: radial-gradient(circle at center, #1a1a2e 0%, #0f0f1a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: #fff;
+}
+
+.about::before {
+    content: '';
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    background: repeating-linear-gradient(
+        transparent 0%,
+        rgba(59, 130, 246, 0.05) 100%
+    );
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Maintain existing shape styles */
+.shape-about {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: 0;
+    opacity: 0.3;
+}
+
+.shape-about-1 {
+    width: 500px;
+    height: 500px;
+    background: linear-gradient(45deg, #ff6b6b, transparent);
+    top: -250px;
+    left: -250px;
+}
+
+.shape-about-2 {
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(45deg, #4ecdc4, transparent);
+    bottom: -200px;
+    right: -200px;
+}
+
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.about-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.about-title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.about-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* About Grid Cards */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+    perspective: 1000px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.about-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 2.5rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    width: 90%;
+    max-width: 600px;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Alternating position for cards */
+.about-card:nth-child(odd) {
+    margin-right: auto;
+    transform: translateX(-100px) translateY(50px);
+}
+
+.about-card:nth-child(even) {
+    margin-left: auto;
+    transform: translateX(100px) translateY(50px);
+}
+
+/* Class to be added when card becomes visible */
+.about-card.visible {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+}
+
+/* Remove the automatic animations */
+.about-card {
+    animation: none !important;
+}
+
+/* Remove the animation delays since we'll handle timing in JavaScript */
+.about-card:nth-child(1),
+.about-card:nth-child(2),
+.about-card:nth-child(3),
+.about-card:nth-child(4) {
+    animation: none !important;
+}
+
+/* Hover effects for alternating cards */
+.about-card:nth-child(odd):hover {
+    transform: translateY(-10px) rotateY(-5deg);
+    box-shadow: 20px 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.about-card:nth-child(even):hover {
+    transform: translateY(-10px) rotateY(5deg);
+    box-shadow: -20px 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Update entrance animations for alternating cards */
+@keyframes cardEntranceLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-100px) scale(0.3);
+        filter: hue-rotate(180deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        filter: hue-rotate(0deg);
+    }
+}
+
+@keyframes cardEntranceRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px) scale(0.3);
+        filter: hue-rotate(180deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        filter: hue-rotate(0deg);
+    }
+}
+
+.about-card:nth-child(odd) {
+    animation: cardEntranceLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.about-card:nth-child(even) {
+    animation: cardEntranceRight 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Update animation delays */
+.about-card:nth-child(1) { animation-delay: 0.1s; }
+.about-card:nth-child(2) { animation-delay: 0.3s; }
+.about-card:nth-child(3) { animation-delay: 0.5s; }
+.about-card:nth-child(4) { animation-delay: 0.7s; }
+
+.about-card-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    transform-origin: center;
+    animation: iconPulse 2s infinite;
+}
+
+.about-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+}
+
+.about-card h3::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    transition: width 0.3s ease;
+}
+
+.about-card:hover h3::after {
+    width: 100px;
+}
+
+.about-card-text {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.about-card-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.about-card-list li {
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.8rem;
+    padding-left: 1.5rem;
+    position: relative;
+    font-size: 1rem;
+}
+
+.about-card-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: #4ecdc4;
+    transition: transform 0.3s ease;
+}
+
+.about-card:hover .about-card-list li::before {
+    transform: translateX(5px);
+}
+
+/* Stats Section */
+.about-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 4rem;
+    padding: 2.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+}
+
+.about-stats:hover {
+    transform: scale(1.02) translateY(-5px);
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+}
+
+/* Testimonials Section */
+.testimonials {
+    background: radial-gradient(circle at center, #1a1a2e 0%, #0f0f1a 100%);
+    position: relative;
+    padding: 6rem 0;
+    overflow: hidden;
+}
+
+.testimonials-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.testimonials-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    opacity: 1;
+    position: relative;
+    z-index: 5;
+}
+
+.testimonials-title {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.testimonials-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 400;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.testimonials-wrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 2rem 0;
+}
+
+.testimonials-track {
+    display: flex;
+    gap: 2rem;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 3rem 1rem;
+    align-items: center;
+    transform-style: preserve-3d;
+}
+
+.testimonial-card {
+    flex: 0 0 calc(33.333% - 1.33rem);
+    min-width: calc(33.333% - 1.33rem);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(0.85);
+    opacity: 0.6;
+    position: relative;
+    transform-origin: center center;
+}
+
+/* Center card effect */
+.testimonial-card.active {
+    transform: scale(1.15) !important;
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    z-index: 3;
+}
+
+/* Adjacent cards effect */
+.testimonial-card.adjacent {
+    transform: scale(0.9);
+    opacity: 0.7;
+    z-index: 2;
+}
+
+/* Other cards */
+.testimonial-card.inactive {
+    transform: scale(0.8);
+    opacity: 0.4;
+    z-index: 1;
+}
+
+.testimonial-content {
+    padding: 2rem;
+    position: relative;
+    transition: all 0.5s ease;
+}
+
+.quote-icon {
+    font-size: 3rem;
+    color: rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+}
+
+.testimonial-text {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.client-info {
+    margin-bottom: 1rem;
+}
+
+.client-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.25rem;
+}
+
+.client-role {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.rating {
+    color: #ffd700;
+    font-size: 1.2rem;
+}
+
+/* Navigation Buttons */
+.testimonial-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.testimonial-nav-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.testimonial-nav-btn.prev {
+    left: 20px;
+}
+
+.testimonial-nav-btn.next {
+    right: 20px;
+}
+
+.testimonial-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .testimonial-card {
+        flex: 0 0 calc(50% - 1rem);
+        min-width: calc(50% - 1rem);
+    }
+    
+    .testimonial-card.active {
+        transform: scale(1.05);
+    }
+    
+    .testimonial-card.adjacent {
+        transform: scale(0.95);
+    }
+}
+
+@media (max-width: 768px) {
+    .about-title,
+    .testimonials-title {
+        font-size: 2.5rem;
+    }
+
+    .about-grid {
+        gap: 2rem;
+    }
+
+    .about-stats {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .testimonial-card {
+        flex: 0 0 calc(100% - 1rem);
+        min-width: calc(100% - 1rem);
+    }
+    
+    .testimonial-nav-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+    }
+
+    .about-card h3 {
+        font-size: 1.5rem;
+    }
+
+    .about-card-text {
+        font-size: 1rem;
+    }
+
+    .about-card {
+        width: 100%;
+        margin: 0 !important; /* Override alternating margins */
+    }
+
+    .about-card:hover {
+        transform: translateY(-10px) !important; /* Override alternating hover effects */
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .testimonial-card.active {
+        transform: scale(1);
+    }
+    
+    .testimonial-card.adjacent {
+        transform: scale(0.9);
+    }
+}
+
+/* Animations */
+@keyframes iconPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes cardEntrance {
+    from {
+        opacity: 0;
+        transform: scale(0.3);
+        filter: hue-rotate(180deg);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+        filter: hue-rotate(0deg);
+    }
+}
+
+.about-card {
+    animation: cardEntrance 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.about-card:nth-child(1) { animation-delay: 0.1s; }
+.about-card:nth-child(2) { animation-delay: 0.3s; }
+.about-card:nth-child(3) { animation-delay: 0.5s; }
+.about-card:nth-child(4) { animation-delay: 0.7s; } 
