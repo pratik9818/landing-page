@@ -122,7 +122,7 @@
     border-radius: 8px;
     color: #fff;
     font-size: 1rem;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease, opacity 0.2s ease;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -131,6 +131,11 @@
     border-color: #4ecdc4;
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 12px rgba(78, 205, 196, 0.2);
+}
+
+.form-input:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
 }
 
 .form-label {
@@ -227,4 +232,35 @@ textarea.form-input {
     .contact-form {
         padding: 1.5rem;
     }
+}
+
+.success-message {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-input.invalid {
+    border-color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+}
+
+.form-input.invalid:focus {
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.2);
 } 
