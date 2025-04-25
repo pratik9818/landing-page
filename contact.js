@@ -1,12 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize Supabase client
-    const supabaseUrl = 'https://xkerkqfhbcvwslcmwykz.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhrZXJrcWZoYmN2d3NsY213eWt6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjUxMTcwNzgsImV4cCI6MjA0MDY5MzA3OH0.7V168e1QCuv_-bFxXf5hBOyJFXQm_9hHOlBa-7jXUQQ';
+    const supabaseUrl = 'https://aekkltpttkwexbwtngft.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFla2tsdHB0dGt3ZXhid3RuZ2Z0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU0OTY2NTUsImV4cCI6MjA2MTA3MjY1NX0.gRxL2xJFM_YgN7nW0ohZBdkE4sTjRXhatm9sNTwjgXA';
     const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
     const form = document.getElementById('contactForm');
     const nameInput = document.getElementById('name');
     const emailInput = document.getElementById('email');
+    const numberInput = document.getElementById('number');
+    console.log(numberInput);
+    
     const serviceInput = document.getElementById('service');
     const messageInput = document.getElementById('message');
 
@@ -15,6 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailError = document.getElementById('emailError');
     const serviceError = document.getElementById('serviceError');
     const messageError = document.getElementById('messageError');
+    const numberError = document.getElementById('numberError');
+
+    // Check if all error elements exist
+    if (!nameError || !emailError || !serviceError || !messageError || !numberError) {
+        console.error('Error: One or more error message elements are missing from the HTML');
+        return; // Exit early if elements are missing
+    }
 
     // Success message function with smooth transition
     const showSuccessMessage = () => {
@@ -43,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         emailError.textContent = '';
         serviceError.textContent = '';
         messageError.textContent = '';
+        numberError.textContent = '';
     };
 
     // Validation functions
@@ -117,11 +128,30 @@ document.addEventListener('DOMContentLoaded', () => {
         return true;
     };
 
+    const validateNumber = () => {
+        const number = numberInput.value.trim();
+        const numberRegex = /^\d{10}$/;
+        
+        if (!number) {
+            numberError.textContent = 'Phone number is required';
+            numberInput.classList.add('invalid');
+            return false;
+        } else if (!numberRegex.test(number)) {
+            numberError.textContent = 'Please enter a valid 10-digit phone number';
+            numberInput.classList.add('invalid');
+            return false;
+        }
+        numberError.textContent = '';
+        numberInput.classList.remove('invalid');
+        return true;
+    };
+
     // Add input event listeners for real-time validation
     nameInput.addEventListener('input', validateName);
     emailInput.addEventListener('input', validateEmail);
     serviceInput.addEventListener('change', validateService);
     messageInput.addEventListener('input', validateMessage);
+    numberInput.addEventListener('input', validateNumber);
 
     // Form submission
     form.addEventListener('submit', async (e) => {
@@ -136,15 +166,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const isEmailValid = validateEmail();
         const isServiceValid = validateService();
         const isMessageValid = validateMessage();
+        const isNumberValid = validateNumber();
 
         console.log('Validation results:', {
             name: isNameValid,
             email: isEmailValid,
             service: isServiceValid,
-            message: isMessageValid
+            message: isMessageValid,
+            number: isNumberValid
         });
 
-        if (isNameValid && isEmailValid && isServiceValid && isMessageValid) {
+        if (isNameValid && isEmailValid && isServiceValid && isMessageValid && isNumberValid) {
             const submitBtn = form.querySelector('.submit-btn');
             const formInputs = form.querySelectorAll('input, select, textarea');
             
@@ -159,6 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     email: emailInput.value.trim(),
                     service: serviceInput.value,
                     message: messageInput.value.trim(),
+                    number:numberInput.value,
                     created_at: new Date().toISOString()
                 };
 

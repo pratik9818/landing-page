@@ -22,18 +22,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const indicators = document.querySelectorAll('.indicator');
     const prevBtn = document.querySelector('.carousel-btn.prev');
     const nextBtn = document.querySelector('.carousel-btn.next');
+    
+    // Exit if carousel elements don't exist on this page
+    if (!slides || !prevBtn || !nextBtn) {
+        return;
+    }
+
     let currentSlide = 0;
     const totalSlides = document.querySelectorAll('.carousel-slide').length;
+
+    // Exit if no slides found
+    if (totalSlides === 0) {
+        return;
+    }
 
     // Auto-advance carousel
     let autoSlideInterval = setInterval(nextSlide, 5000);
 
     function updateSlidePosition() {
         slides.style.transform = `translateX(-${currentSlide * 16.666}%)`;
-        // Update indicators
-        indicators.forEach((indicator, index) => {
-            indicator.classList.toggle('active', index === currentSlide);
-        });
+        // Update indicators only if they exist
+        if (indicators.length > 0) {
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlide);
+            });
+        }
     }
 
     function nextSlide() {
@@ -59,14 +72,17 @@ document.addEventListener('DOMContentLoaded', function() {
         autoSlideInterval = setInterval(nextSlide, 5000);
     });
 
-    indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
-            clearInterval(autoSlideInterval);
-            currentSlide = index;
-            updateSlidePosition();
-            autoSlideInterval = setInterval(nextSlide, 5000);
+    // Add indicator listeners only if indicators exist
+    if (indicators.length > 0) {
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                clearInterval(autoSlideInterval);
+                currentSlide = index;
+                updateSlidePosition();
+                autoSlideInterval = setInterval(nextSlide, 5000);
+            });
         });
-    });
+    }
 
     // Pause auto-advance on hover
     slides.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
